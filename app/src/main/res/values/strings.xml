@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Notebook</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="random_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+        Lorem Ipsum has been the industry desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+
+    <string name="Facebook_Interstitial_placement">343235443583798_343480953559247</string>
+
+    <string name="Facebook_Banner_placement">343235443583798_343240613583281</string>
+    <string name="Facebook_Banner_placement_details">343235443583798_343463110227698</string>
+    <string name="Facebook_Banner_placement_edit">343235443583798_343507183556624</string>
+    <string name="Facebook_Banner_placement_editNote">343235443583798_343507456889930</string>
+
+
+</resources>

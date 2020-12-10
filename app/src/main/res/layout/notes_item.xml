@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="8dp"
+    android:layout_margin="16dp"
+    android:layout_height="wrap_content">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="7dp"
+        android:id="@+id/color"
+        android:background="@color/colorFour"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="11.30 am"
+            android:id="@+id/nTime"
+            android:includeFontPadding="false"
+            android:padding="7dp"/>
+
+        <View
+
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="@color/lightGray"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="9dp"
+             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="29/05/2020"
+            android:id="@+id/nDate"
+            android:includeFontPadding="false"
+            android:padding="7dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/fav_icon"
+            android:visibility="invisible">
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:background="@color/lightGray"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="6dp"
+                />
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:padding="4dp"
+                android:src="@drawable/ic_favorite"
+                android:tint="@color/colorRed"
+                 />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vedio chat with staff members"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:id="@+id/nTitle"
+        android:textColor="@android:color/black"
+        android:includeFontPadding="false"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ndesc"
+        android:text= "@string/random_text"
+        android:includeFontPadding="false"
+        android:maxLines="3"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"/>
+
+    <TextView
+        android:id="@+id/listId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="TextView"
+        android:visibility="gone"
+        />
+
+
+</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

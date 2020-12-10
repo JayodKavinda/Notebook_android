@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/banner_container_edit"
+        android:orientation="vertical">
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:id="@+id/appBar">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:contentInsetStart="10dp"
+                app:contentInsetEnd="0dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp">
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_back"
+                        android:onClick="Back_click"
+                        android:background="@color/colorPrimary"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/backBtn"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:layout_toEndOf="@+id/backBtn">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="New Note"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/saveBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="10dp"
+                        android:layout_centerVertical="true"
+                        android:text="Save"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="18sp"
+                        android:onClick="saveNote" />
+
+                    <ImageButton
+                        android:id="@+id/colorBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/saveBtn"
+                        android:background="@color/colorPrimary"
+                        android:onClick="colorPicker"
+                        android:src="@drawable/ic_color_lens" />
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/noteTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName|textCapSentences"
+                android:hint="Enter Title"
+                android:textColor="@color/colorBlack"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textColorHighlight="#b8b6b6"
+                android:textStyle="bold"
+                android:paddingLeft="16dp"
+                android:background="@null"
+                android:paddingTop="20dp"
+                android:paddingBottom="16dp"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/favouriteBtn"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:onClick="favouriteClick"
+                android:layout_marginEnd="15dp"
+                android:background= "@android:color/transparent"
+                android:src="@drawable/ic_favorite"/>
+        </RelativeLayout>
+
+
+        <EditText
+            android:id="@+id/noteDetails"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Note details"
+            android:textColor="@color/colorBlack"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:paddingLeft="16dp"
+            android:textColorHighlight="#b8b6b6"
+            android:background="@null"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:inputType="textMultiLine" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/banner_container_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+</RelativeLayout>
