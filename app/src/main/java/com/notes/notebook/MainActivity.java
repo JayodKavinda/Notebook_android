@@ -1,7 +1,9 @@
 package com.notes.notebook;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -20,10 +22,12 @@ import android.graphics.Color;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -39,7 +43,13 @@ import com.facebook.ads.AudienceNetworkAds;
 import com.facebook.ads.*;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.play.core.review.ReviewInfo;
+import com.google.android.play.core.review.ReviewManager;
+import com.google.android.play.core.review.ReviewManagerFactory;
+import com.google.android.play.core.tasks.OnCompleteListener;
+import com.google.android.play.core.tasks.Task;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
@@ -71,11 +81,16 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     private InterstitialAd interstitialAd;
     private final String TAG ="tag";
 
+
+    private ReviewManager reviewManager;
+    private ReviewInfo reviewInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         /////AdView///////////////////////////////////////////
+
 
         // Initialize the Audience Network SDK
         session = new SessionBilling(this);
@@ -140,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
         loadData();
 
+        initReviewManager();
         dialog = new Dialog(this);
 
         NoteDatabase db= new NoteDatabase(this);
@@ -163,6 +179,53 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
 
 
+    }
+
+    private void initReviewManager() {
+        reviewManager = ReviewManagerFactory.create(this);
+        Task<ReviewInfo> request = reviewManager.requestReviewFlow();
+        request.addOnCompleteListener(new OnCompleteListener<ReviewInfo>() {
+            @Override
+            public void onComplete(@NonNull Task<ReviewInfo> task) {
+                if (task.isSuccessful()) {
+                    // We can get the ReviewInfo object
+                    reviewInfo = task.getResult();
+                } else {
+                    // There was some problem, continue regardless of the result.
+                    //Toast.makeText(Settings.this , "There was a problem in review info ", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    public void RateUs(){
+
+        if(reviewInfo != null){
+            Task<Void> flow = reviewManager.launchReviewFlow(MainActivity.this, reviewInfo);
+            flow.addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    // The flow has finished. The API does not indicate whether the user
+                    // reviewed or not, or even whether the review dialog was shown. Thus, no
+                    // matter the result, we continue our app flow.
+                    if (task.isSuccessful()) {
+
+                       // Log.i("rated::", "Rated US!!!");
+
+                        SharedPreferences.Editor editor = getSharedPreferences("isRateAppear",MODE_PRIVATE).edit();
+                        editor.putBoolean("isRateAppear",true);
+                        editor.apply();
+
+                    }
+
+
+
+                }
+            });
+            finishAffinity();
+        }else{
+            finishAffinity();
+        }
     }
 
     @Override
@@ -418,34 +481,55 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     @Override
     public void onBackPressed() {
-        Button exit,cancelExit;
 
-        dialog.setContentView(R.layout.exit_popup);
-        exit = dialog.findViewById(R.id.exitBtn);
-        cancelExit = dialog.findViewById(R.id.cancelExit);
+        SharedPreferences sharedPreferences = getSharedPreferences("isRateAppear", MODE_PRIVATE);
+        boolean rateAppear = sharedPreferences.getBoolean("isRateAppear", false);
 
-        cancelExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        if(!rateAppear){
 
-        exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //finish();
-
-                if(interstitialAd != null && interstitialAd.isAdLoaded()) {
-                    interstitialAd.show();
-                }
+            if(Build.VERSION.SDK_INT>= 21){
+                RateUs();
+            }else{
+                SharedPreferences.Editor editor = getSharedPreferences("isRateAppear",MODE_PRIVATE).edit();
+                editor.putBoolean("isRateAppear",true);
+                editor.apply();
                 finishAffinity();
-               // System.exit(0);
-            }
-        });
 
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
+            }
+
+            //Log.i("rated::", "Rated!!!");
+
+        }else {
+           // Log.i("rated::", "Not Rated!!!");
+            Button exit, cancelExit;
+
+            dialog.setContentView(R.layout.exit_popup);
+            exit = dialog.findViewById(R.id.exitBtn);
+            cancelExit = dialog.findViewById(R.id.cancelExit);
+
+            cancelExit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+            exit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //finish();
+
+                    if (interstitialAd != null && interstitialAd.isAdLoaded()) {
+                        interstitialAd.show();
+                    }
+                    finishAffinity();
+                    // System.exit(0);
+                }
+            });
+
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+        }
 
     }
 

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EditActivity"
+    android:background="@color/backgroundColor"
     android:orientation="vertical">
 
     <LinearLayout
@@ -17,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:id="@+id/appBar">
+            android:id="@+id/appBarEditActivity">
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
@@ -38,7 +39,7 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_arrow_back"
                         android:onClick="Back_click"
-                        android:background="@color/colorPrimary"
+                        android:background="@null"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:id="@+id/backBtn"/>
@@ -78,7 +79,7 @@
                         android:layout_marginRight="15dp"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@id/saveBtn"
-                        android:background="@color/colorPrimary"
+                        android:background="@null"
                         android:onClick="colorPicker"
                         android:src="@drawable/ic_color_lens" />
                 </RelativeLayout>
@@ -97,11 +98,12 @@
                 android:ems="10"
                 android:inputType="textPersonName|textCapSentences"
                 android:hint="Enter Title"
-                android:textColor="@color/colorBlack"
+                android:textColorHint="@color/grayTextColor"
+                android:textColor="@color/textColor"
                 android:textCursorDrawable="@drawable/color_cursor"
                 android:textColorHighlight="#b8b6b6"
                 android:textStyle="bold"
-                android:paddingLeft="16dp"
+                android:paddingLeft="18dp"
                 android:background="@null"
                 android:paddingTop="20dp"
                 android:paddingBottom="16dp"/>
@@ -124,9 +126,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:ems="10"
+            android:textSize="17sp"
             android:gravity="start|top"
+            android:layout_marginEnd="7dp"
             android:hint="Note details"
-            android:textColor="@color/colorBlack"
+            android:textColorHint="@color/grayTextColor"
+            android:textColor="@color/textColor"
             android:textCursorDrawable="@drawable/color_cursor"
             android:paddingLeft="16dp"
             android:textColorHighlight="#b8b6b6"

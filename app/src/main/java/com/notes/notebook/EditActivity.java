@@ -8,11 +8,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -26,6 +28,7 @@ import com.facebook.ads.AdListener;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.facebook.ads.AudienceNetworkAds;
+import com.google.android.material.appbar.AppBarLayout;
 
 import java.util.Calendar;
 
@@ -40,9 +43,10 @@ public class EditActivity extends AppCompatActivity {
     int isFavourite = 0;
     ImageButton colorBtn;  // color picker icon in edit Activity
 
+    AppBarLayout appBarLayout;
 AdView adView;
 
-
+Window window;
     SessionBilling session;
 
     @Override
@@ -112,12 +116,21 @@ AdView adView;
         noteDetalils = findViewById(R.id.noteDetails);
          colorBtn = findViewById(R.id.colorBtn);
 
+         appBarLayout = findViewById(R.id.appBarEditActivity);
+
         calendar = Calendar.getInstance();
-        currentDate =  calendar.get(Calendar.YEAR) + "/" + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH);
+        currentDate =  calendar.get(Calendar.YEAR) + "/" + setZeroFirst((calendar.get(Calendar.MONTH)+1)) + "/" +  setZeroFirst(calendar.get(Calendar.DAY_OF_MONTH));
         currentTime =  String.valueOf(calendar.get(Calendar.HOUR_OF_DAY))+ ":"+pad( calendar.get(Calendar.MINUTE)) + ":"+ pad(calendar.get(Calendar.SECOND));  //pad(calendar.get(Calendar.HOUR)) + ":" + pad(calendar.get(Calendar.MINUTE)) + " "+ timePad(calendar.get(Calendar.AM_PM));
 
         Log.d("Calender","Date and Time: "+ currentDate +"  and "+ currentTime);
 
+    }
+
+    private String  setZeroFirst(int i) {
+        if(i<10)
+            return "0"+i;
+        else
+            return String.valueOf(i);
     }
 
     private String pad(int i) {
@@ -192,9 +205,11 @@ AdView adView;
 
     }
 
+
+
     public  void colorPicker(View view){
 
-        final ImageButton color1,color2,color3,color4,color5,color6,color7,color_gray,color_black,color_white;
+        final ImageButton color1,color2,color3,color4,color5,color6,color7,color9, color_gray,color_black,color_white;
 
 
 
@@ -208,7 +223,7 @@ AdView adView;
         color6 = dialog.findViewById(R.id.color6);
         color7 = dialog.findViewById(R.id.color7);
         color_gray = dialog.findViewById(R.id.color_gray);
-        color_black = dialog.findViewById(R.id.color_black);
+        color9 = dialog.findViewById(R.id.color9);
         color_white = dialog.findViewById(R.id.color_white);
 
 
@@ -225,7 +240,8 @@ AdView adView;
             @Override
             public void onClick(View view) {
                 color = 1;
-                colorBtn.setColorFilter(ContextCompat.getColor(EditActivity.this,R.color.colorOne));
+                appBarLayout.setBackgroundColor(EditActivity.this.getResources().getColor(R.color.colorOne));
+                setStatusBarColor(EditActivity.this.getResources().getColor(R.color.colorOne));
                 dialog.dismiss();
             }
         });
@@ -233,7 +249,8 @@ AdView adView;
             @Override
             public void onClick(View view) {
                 color = 2;
-                colorBtn.setColorFilter(ContextCompat.getColor(EditActivity.this,R.color.colorTwo));
+                appBarLayout.setBackgroundColor(EditActivity.this.getResources().getColor(R.color.colorTwo));
+                setStatusBarColor(EditActivity.this.getResources().getColor(R.color.colorTwo));
                 dialog.dismiss();
             }
         });
@@ -241,7 +258,8 @@ AdView adView;
             @Override
             public void onClick(View view) {
                 color = 3;
-                colorBtn.setColorFilter(ContextCompat.getColor(EditActivity.this,R.color.colorThree));
+                appBarLayout.setBackgroundColor(EditActivity.this.getResources().getColor(R.color.colorThree));
+                setStatusBarColor(EditActivity.this.getResources().getColor(R.color.colorThree));
                 dialog.dismiss();
             }
         });
@@ -249,7 +267,8 @@ AdView adView;
             @Override
             public void onClick(View view) {
                 color = 4;
-                colorBtn.setColorFilter(ContextCompat.getColor(EditActivity.this,R.color.colorFour));
+                appBarLayout.setBackgroundColor(EditActivity.this.getResources().getColor(R.color.colorFour));
+                setStatusBarColor(EditActivity.this.getResources().getColor(R.color.colorFour));
                 dialog.dismiss();
             }
         });
@@ -257,7 +276,8 @@ AdView adView;
             @Override
             public void onClick(View view) {
                 color = 5;
-                colorBtn.setColorFilter(ContextCompat.getColor(EditActivity.this,R.color.colorFive));
+                appBarLayout.setBackgroundColor(EditActivity.this.getResources().getColor(R.color.colorFive));
+                setStatusBarColor(EditActivity.this.getResources().getColor(R.color.colorFive));
                 dialog.dismiss();
             }
         });
@@ -265,7 +285,8 @@ AdView adView;
             @Override
             public void onClick(View view) {
                 color = 6;
-                colorBtn.setColorFilter(ContextCompat.getColor(EditActivity.this,R.color.colorSix));
+                appBarLayout.setBackgroundColor(EditActivity.this.getResources().getColor(R.color.colorSix));
+                setStatusBarColor(EditActivity.this.getResources().getColor(R.color.colorSix));
                 dialog.dismiss();
             }
         });
@@ -273,7 +294,8 @@ AdView adView;
             @Override
             public void onClick(View view) {
                 color = 7;
-                colorBtn.setColorFilter(ContextCompat.getColor(EditActivity.this,R.color.colorSeven));
+                appBarLayout.setBackgroundColor(EditActivity.this.getResources().getColor(R.color.colorSeven));
+                setStatusBarColor(EditActivity.this.getResources().getColor(R.color.colorSeven));
                 dialog.dismiss();
             }
         });
@@ -281,15 +303,17 @@ AdView adView;
             @Override
             public void onClick(View view) {
                 color = 8;
-                colorBtn.setColorFilter(ContextCompat.getColor(EditActivity.this,R.color.colorGray));
+                appBarLayout.setBackgroundColor(EditActivity.this.getResources().getColor(R.color.colorGray));
+                setStatusBarColor(EditActivity.this.getResources().getColor(R.color.colorGray));
                 dialog.dismiss();
             }
         });
-        color_black.setOnClickListener(new View.OnClickListener() {
+        color9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 color = 9;
-                colorBtn.setColorFilter(ContextCompat.getColor(EditActivity.this,R.color.colorBlack));
+                appBarLayout.setBackgroundColor(EditActivity.this.getResources().getColor(R.color.colorNine));
+                setStatusBarColor(EditActivity.this.getResources().getColor(R.color.colorNine));
                 dialog.dismiss();
             }
         });
@@ -297,7 +321,8 @@ AdView adView;
             @Override
             public void onClick(View view) {
                 color = 10;
-                colorBtn.setColorFilter(ContextCompat.getColor(EditActivity.this,R.color.colorBlack));
+                appBarLayout.setBackgroundColor(EditActivity.this.getResources().getColor(R.color.colorWhite));
+                setStatusBarColor(EditActivity.this.getResources().getColor(R.color.colorWhite));
                 dialog.dismiss();
             }
         });
@@ -308,6 +333,15 @@ AdView adView;
 
 
 
+    }
+
+
+    private void setStatusBarColor(int color) {
+
+        if(Build.VERSION.SDK_INT> 21){
+            window = this.getWindow();
+            window.setStatusBarColor(color);
+        }
     }
 
     public void favouriteClick(View v){

@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".Settings"
     android:orientation="vertical"
-    android:background="@color/colorPrimary">
+    android:background="@color/backgroundColor">
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,7 +16,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/backgroundColor"
         android:id="@+id/appBar">
 
         <androidx.appcompat.widget.Toolbar
@@ -36,7 +37,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_arrow_back"
-                    android:background="@color/colorPrimary"
+                    android:tint="@color/textColor"
+                    android:background="@null"
                     android:onClick="Back_click"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
@@ -46,6 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
+                    android:textColor="@color/textColor"
                     android:text="Settings"
                     android:textSize="22sp"
                     android:textStyle="bold"
@@ -99,6 +102,9 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+
+
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -149,7 +155,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Current Version : 2.0.0 \n ebitsapps@gmial.com"/>
+        android:textColor="@color/textColor"
+        android:text="Current Version : 2.1.0 \n ebitsapps@gmail.com"/>
 
 
 

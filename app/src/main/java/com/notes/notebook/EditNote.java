@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.opengl.ETC1;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -23,6 +25,7 @@ import com.facebook.ads.AdListener;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.facebook.ads.AudienceNetworkAds;
+import com.google.android.material.appbar.AppBarLayout;
 
 import java.util.Calendar;
 
@@ -33,6 +36,8 @@ public class EditNote extends AppCompatActivity {
     ImageButton colorBtn,favBtn;
     NoteDatabase db;
     NodeModel note;
+    AppBarLayout appBarLayout;
+    Window window;  //for set status bar color
 
     Calendar calendar;
     String currentDate, currentTime;
@@ -110,10 +115,12 @@ AdView adView;
         colorBtn = findViewById(R.id.colorBtnEdit);
         favBtn = findViewById(R.id.fav_icon_edit);
 
+        appBarLayout = findViewById(R.id.appBarEditNote);
+
         dialog = new Dialog(this);
 
         calendar = Calendar.getInstance();
-        currentDate =  calendar.get(Calendar.YEAR) + "/" + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH);
+        currentDate =  calendar.get(Calendar.YEAR) + "/" + setZeroFirst((calendar.get(Calendar.MONTH)+1)) + "/" + setZeroFirst(calendar.get(Calendar.DAY_OF_MONTH));
         currentTime =  String.valueOf(calendar.get(Calendar.HOUR_OF_DAY))+ ":"+pad( calendar.get(Calendar.MINUTE))+ ":"+ pad(calendar.get(Calendar.SECOND));;
 
 
@@ -123,12 +130,69 @@ AdView adView;
         db = new NoteDatabase(this);
          note = db.getNote(id);
 
+        setStatusBarColor(note.getColor());
+        appBarLayout.setBackgroundColor(getNoteColor(note.getColor()));
+
         title.setText(note.getHead());
         details.setText(note.getDesc());
         color = note.getColor();
         isFavourite =note.getFav();
         setColorPicker(color);
         setFavIcon(note.getFav());
+    }
+
+    public int getNoteColor(int color){
+        switch (color){
+            case 1:
+                return this.getResources().getColor(R.color.colorOne);
+            case 2:
+                return this.getResources().getColor(R.color.colorTwo);
+
+            case 3:
+                return this.getResources().getColor(R.color.colorThree);
+
+            case 4:
+                return this.getResources().getColor(R.color.colorFour);
+
+            case 5:
+                return this.getResources().getColor(R.color.colorFive);
+
+            case 6:
+                return this.getResources().getColor(R.color.colorSix);
+
+            case 7:
+                return this.getResources().getColor(R.color.colorSeven);
+
+            case 8:
+                return this.getResources().getColor(R.color.colorGray);
+
+            case 9:
+                return this.getResources().getColor(R.color.colorNine);
+
+            case 10:
+                return this.getResources().getColor(R.color.colorWhite);
+
+
+            default:
+                return this.getResources().getColor(R.color.colorWhite);
+
+        }
+
+    }
+
+    private void setStatusBarColor(int color) {
+
+        if(Build.VERSION.SDK_INT> 21){
+            window = this.getWindow();
+            window.setStatusBarColor(getNoteColor(color));
+        }
+    }
+
+    private String  setZeroFirst(int i) {
+        if(i<10)
+            return "0"+i;
+        else
+            return String.valueOf(i);
     }
 
     private void setFavIcon(int fav) {
@@ -139,42 +203,8 @@ AdView adView;
     }
 
     void setColorPicker(int color){
-        switch (color){
-            case 1:
-                colorBtn.setColorFilter(this.getResources().getColor(R.color.colorOne));
-                break;
-            case 2:
-                colorBtn.setColorFilter(this.getResources().getColor(R.color.colorTwo));
-                break;
-            case 3:
-                colorBtn.setColorFilter(this.getResources().getColor(R.color.colorThree));
-                break;
-            case 4:
-                colorBtn.setColorFilter(this.getResources().getColor(R.color.colorFour));
-                break;
-            case 5:
-                colorBtn.setColorFilter(this.getResources().getColor(R.color.colorFive));
-                break;
+        colorBtn.setColorFilter(this.getResources().getColor(R.color.colorBlack));
 
-            case 6:
-                colorBtn.setColorFilter(this.getResources().getColor(R.color.colorSix));
-                break;
-            case 7:
-                colorBtn.setColorFilter(this.getResources().getColor(R.color.colorSeven));
-                break;
-            case 8:
-                colorBtn.setColorFilter(this.getResources().getColor(R.color.colorGray));
-                break;
-            case 9:
-                colorBtn.setColorFilter(this.getResources().getColor(R.color.colorBlack));
-                break;
-            case 10:
-                colorBtn.setColorFilter(this.getResources().getColor(R.color.colorBlack));
-                break;
-             default:
-                 colorBtn.setColorFilter(this.getResources().getColor(R.color.colorBlack));
-
-        }
 
     }
 
@@ -260,7 +290,7 @@ AdView adView;
 
     public  void colorPickerEdit(View view){
 
-        final ImageButton color1,color2,color3,color4,color5,color6,color7,color_gray,color_black,color_white;
+        final ImageButton color1,color2,color3,color4,color5,color6,color7,color9,color_gray,color_black,color_white;
 
 
 
@@ -274,7 +304,7 @@ AdView adView;
         color6 = dialog.findViewById(R.id.color6);
         color7 = dialog.findViewById(R.id.color7);
         color_gray = dialog.findViewById(R.id.color_gray);
-        color_black = dialog.findViewById(R.id.color_black);
+        color9 = dialog.findViewById(R.id.color9);
         color_white = dialog.findViewById(R.id.color_white);
 
 
@@ -291,7 +321,8 @@ AdView adView;
             @Override
             public void onClick(View view) {
                 color = 1;
-                colorBtn.setColorFilter(getColor(R.color.colorOne));
+                appBarLayout.setBackgroundColor(EditNote.this.getResources().getColor(R.color.colorOne));
+                setStatusBarColor(color);
                 dialog.dismiss();
             }
         });
@@ -299,7 +330,8 @@ AdView adView;
             @Override
             public void onClick(View view) {
                 color = 2;
-                colorBtn.setColorFilter(getColor(R.color.colorTwo));
+                appBarLayout.setBackgroundColor(EditNote.this.getResources().getColor(R.color.colorTwo));
+                setStatusBarColor(color);
                 dialog.dismiss();
             }
         });
@@ -307,7 +339,8 @@ AdView adView;
             @Override
             public void onClick(View view) {
                 color = 3;
-                colorBtn.setColorFilter(getColor(R.color.colorThree));
+                appBarLayout.setBackgroundColor(EditNote.this.getResources().getColor(R.color.colorThree));
+                setStatusBarColor(color);
                 dialog.dismiss();
             }
         });
@@ -315,7 +348,8 @@ AdView adView;
             @Override
             public void onClick(View view) {
                 color = 4;
-                colorBtn.setColorFilter(getColor(R.color.colorFour));
+                appBarLayout.setBackgroundColor(EditNote.this.getResources().getColor(R.color.colorFour));
+                setStatusBarColor(color);
                 dialog.dismiss();
             }
         });
@@ -323,7 +357,8 @@ AdView adView;
             @Override
             public void onClick(View view) {
                 color = 5;
-                colorBtn.setColorFilter(getColor(R.color.colorFive));
+                appBarLayout.setBackgroundColor(EditNote.this.getResources().getColor(R.color.colorFive));
+                setStatusBarColor(color);
                 dialog.dismiss();
             }
         });
@@ -331,7 +366,8 @@ AdView adView;
             @Override
             public void onClick(View view) {
                 color = 6;
-                colorBtn.setColorFilter(getColor(R.color.colorSix));
+                appBarLayout.setBackgroundColor(EditNote.this.getResources().getColor(R.color.colorSix));
+                setStatusBarColor(color);
                 dialog.dismiss();
             }
         });
@@ -339,7 +375,8 @@ AdView adView;
             @Override
             public void onClick(View view) {
                 color = 7;
-                colorBtn.setColorFilter(getColor(R.color.colorSeven));
+                appBarLayout.setBackgroundColor(EditNote.this.getResources().getColor(R.color.colorSeven));
+                setStatusBarColor(color);
                 dialog.dismiss();
             }
         });
@@ -347,15 +384,17 @@ AdView adView;
             @Override
             public void onClick(View view) {
                 color = 8;
-                colorBtn.setColorFilter(getColor(R.color.colorGray));
+                appBarLayout.setBackgroundColor(EditNote.this.getResources().getColor(R.color.colorGray));
+                setStatusBarColor(color);
                 dialog.dismiss();
             }
         });
-        color_black.setOnClickListener(new View.OnClickListener() {
+        color9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 color = 9;
-                colorBtn.setColorFilter(getColor(R.color.colorBlack));
+                appBarLayout.setBackgroundColor(EditNote.this.getResources().getColor(R.color.colorNine));
+                setStatusBarColor(color);
                 dialog.dismiss();
             }
         });
@@ -363,7 +402,8 @@ AdView adView;
             @Override
             public void onClick(View view) {
                 color = 10;
-                colorBtn.setColorFilter(getColor(R.color.colorBlack));
+                appBarLayout.setBackgroundColor(EditNote.this.getResources().getColor(R.color.colorWhite));
+                setStatusBarColor(color);
                 dialog.dismiss();
             }
         });
@@ -376,6 +416,8 @@ AdView adView;
 
 
     }
+
+
 
     public void favouriteClickEdit(View v){
         ImageButton favouriteBtn = findViewById(R.id.favouriteBtn);

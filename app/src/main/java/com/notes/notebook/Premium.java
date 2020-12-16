@@ -59,7 +59,7 @@ public class Premium extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(isNetworkAvailable()) {
+                if(isNetworkAvailable() && skuDetailsHashMap != null) {
                     BillingFlowParams mBillingFlowParams = BillingFlowParams.newBuilder()
                             .setSkuDetails(skuDetailsHashMap.get("notebook_pro"))  //In-app product name
                             .build();
@@ -86,6 +86,8 @@ public class Premium extends AppCompatActivity {
                     for (Purchase purchase : purchases) {
                         handlePurchase(purchase);
                     }
+
+
                 } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
                     // Handle an error caused by a user cancelling the purchase flow.
                 } else {

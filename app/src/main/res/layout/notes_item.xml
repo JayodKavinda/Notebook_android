@@ -10,7 +10,8 @@
 
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
     <View
         android:layout_width="match_parent"
@@ -20,31 +21,36 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:paddingStart="10dp"
+        android:id="@+id/note_item_header"
         android:layout_height="wrap_content">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/grayTextColor"
             android:text="11.30 am"
             android:id="@+id/nTime"
             android:includeFontPadding="false"
-            android:padding="7dp"/>
+            android:padding="3dp"/>
 
-        <View
+        <TextView
 
-            android:layout_width="1dp"
-            android:layout_height="fill_parent"
-            android:background="@color/lightGray"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="9dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="|"
+            android:textColor="@color/grayTextColor"
+            android:includeFontPadding="false"
+            android:padding="1dp"/>
              />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="29/05/2020"
+            android:textColor="@color/grayTextColor"
             android:id="@+id/nDate"
             android:includeFontPadding="false"
-            android:padding="7dp"/>
+            android:padding="3dp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -52,18 +58,18 @@
             android:orientation="horizontal"
             android:id="@+id/fav_icon"
             android:visibility="invisible">
-            <View
-                android:layout_width="1dp"
-                android:layout_height="fill_parent"
-                android:background="@color/lightGray"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="6dp"
-                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="|"
+                android:textColor="@color/grayTextColor"
+                android:includeFontPadding="false"
+                android:padding="2dp"/>
 
             <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:padding="4dp"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:padding="0dp"
                 android:src="@drawable/ic_favorite"
                 android:tint="@color/colorRed"
                  />
@@ -78,21 +84,25 @@
         android:textStyle="bold"
         android:textSize="18sp"
         android:id="@+id/nTitle"
-        android:textColor="@android:color/black"
+        android:textColor="@color/colorBlack"
         android:includeFontPadding="false"
         android:paddingStart="16dp"
+        android:layout_marginTop="5dp"
         android:paddingEnd="16dp"/>
+
     <TextView
+        android:id="@+id/ndesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ndesc"
-        android:text= "@string/random_text"
         android:includeFontPadding="false"
         android:maxLines="3"
+
         android:paddingStart="16dp"
-        android:paddingEnd="16dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"/>
+        android:paddingEnd="16dp"
+        android:paddingBottom="10dp"
+        android:text="@string/random_text"
+    />
 
     <TextView
         android:id="@+id/listId"

@@ -6,8 +6,10 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -21,16 +23,19 @@ import com.facebook.ads.AdListener;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.facebook.ads.AudienceNetworkAds;
+import com.google.android.material.appbar.AppBarLayout;
 
 import java.io.InputStream;
 
 public class DetailsActivity extends AppCompatActivity {
 
-    TextView titleNote;
+    TextView titleNote,detailNoteHeading;
     TextView DetailsNote;
-
+    AppBarLayout appBarLayout;
     NoteDatabase db;
     NodeModel note;
+
+    Window window;  //for set status bar color
 
     Dialog dialog;
 
@@ -96,23 +101,84 @@ AdView adView;
         }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
         dialog = new Dialog(this);
         titleNote = findViewById(R.id.noteTitleDetails);
         DetailsNote = findViewById(R.id.noteDetailsNew);
+        detailNoteHeading = findViewById(R.id.detail_note_text);
+
+        appBarLayout = findViewById(R.id.appBarDetails);
 
         Intent intent = getIntent();
         long id = intent.getLongExtra("ID", 0);
         db = new NoteDatabase(this);
          note = db.getNote(id);
 
+
+        setStatusBarColor(note.getColor());
+
+        appBarLayout.setBackgroundColor(getNoteColor(note.getColor()));
+
+
+
         titleNote.setTextSize(18);
         titleNote.setText(note.getHead());
+        detailNoteHeading.setText(note.getHead());
         DetailsNote.setTextSize(17);
         DetailsNote.setText((note.getDesc()));
+
 
 //////////////////////adview
 
 
+    }
+
+    public int getNoteColor(int color){
+        switch (color){
+            case 1:
+                return this.getResources().getColor(R.color.colorOne);
+            case 2:
+                return this.getResources().getColor(R.color.colorTwo);
+
+            case 3:
+                return this.getResources().getColor(R.color.colorThree);
+
+            case 4:
+                return this.getResources().getColor(R.color.colorFour);
+
+            case 5:
+                return this.getResources().getColor(R.color.colorFive);
+
+            case 6:
+                return this.getResources().getColor(R.color.colorSix);
+
+            case 7:
+                return this.getResources().getColor(R.color.colorSeven);
+
+            case 8:
+                return this.getResources().getColor(R.color.colorGray);
+
+            case 9:
+                return this.getResources().getColor(R.color.colorNine);
+
+            case 10:
+                return this.getResources().getColor(R.color.colorWhite);
+
+
+            default:
+                return this.getResources().getColor(R.color.colorWhite);
+
+        }
+
+    }
+
+    private void setStatusBarColor(int color) {
+
+        if(Build.VERSION.SDK_INT> 21){
+            window = this.getWindow();
+            window.setStatusBarColor(getNoteColor(color));
+        }
     }
 
     public void deleteNote(View view){

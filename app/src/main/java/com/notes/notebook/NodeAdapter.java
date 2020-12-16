@@ -62,38 +62,48 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NotesViewHolde
        switch (colorHolder){
             case 1:
                 holder.color.setBackgroundColor(context.getResources().getColor(R.color.colorOne));
+                holder.noteHeader.setBackgroundColor(context.getResources().getColor(R.color.colorOne));
                 break;
             case 2:
                 holder.color.setBackgroundColor(context.getResources().getColor(R.color.colorTwo));
+                holder.noteHeader.setBackgroundColor(context.getResources().getColor(R.color.colorTwo));
                 break;
             case 3:
                 holder.color.setBackgroundColor(context.getResources().getColor(R.color.colorThree));
+                holder.noteHeader.setBackgroundColor(context.getResources().getColor(R.color.colorThree));
                 break;
             case 4:
                 holder.color.setBackgroundColor(context.getResources().getColor(R.color.colorFour));
+                holder.noteHeader.setBackgroundColor(context.getResources().getColor(R.color.colorFour));
                 break;
 
             case 5:
                 holder.color.setBackgroundColor(context.getResources().getColor(R.color.colorFive));
+                holder.noteHeader.setBackgroundColor(context.getResources().getColor(R.color.colorFive));
                 break;
            case 6:
                holder.color.setBackgroundColor(context.getResources().getColor(R.color.colorSix));
+               holder.noteHeader.setBackgroundColor(context.getResources().getColor(R.color.colorSix));
                break;
            case 7:
                holder.color.setBackgroundColor(context.getResources().getColor(R.color.colorSeven));
+               holder.noteHeader.setBackgroundColor(context.getResources().getColor(R.color.colorSeven));
                break;
            case 8:
                holder.color.setBackgroundColor(context.getResources().getColor(R.color.colorGray));
+               holder.noteHeader.setBackgroundColor(context.getResources().getColor(R.color.colorGray));
                break;
            case 9:
-               holder.color.setBackgroundColor(context.getResources().getColor(R.color.colorBlack));
+               holder.color.setBackgroundColor(context.getResources().getColor(R.color.colorNine));
+               holder.noteHeader.setBackgroundColor(context.getResources().getColor(R.color.colorNine));
                break;
            case 10:
                holder.color.setBackgroundColor(context.getResources().getColor(R.color.colorWhite));
+               holder.noteHeader.setBackgroundColor(context.getResources().getColor(R.color.colorWhite));
                break;
 
             default:
-                holder.color.setBackgroundColor(context.getResources().getColor(R.color.colorWhite));
+                holder.color.setBackgroundColor(context.getResources().getColor(R.color.backgroundColor));
                 break;
 
 
@@ -124,7 +134,7 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NotesViewHolde
 
         private TextView headText,descText,timeText,dateText, nID;
         private View color;
-        private LinearLayout favourite;
+        private LinearLayout favourite,noteHeader;
         ImageButton colorIcon;
 
         public NotesViewHolder(@NonNull View itemView) {
@@ -135,6 +145,7 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NotesViewHolde
             dateText= itemView.findViewById(R.id.nDate);
             nID = itemView.findViewById(R.id.listId);
             color= itemView.findViewById(R.id.color);
+            noteHeader =  itemView.findViewById(R.id.note_item_header);
             colorIcon= itemView.findViewById(R.id.colorBtnEdit);
             favourite = itemView.findViewById(R.id.fav_icon);
 

@@ -54,8 +54,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:tint="@color/colorBlack"
-                android:id="@+id/color_black"
+                android:tint="@color/colorNine"
+                android:id="@+id/color9"
                 android:background="@color/colorPrimary"
                 android:src="@drawable/ic_color_ball" />
 
