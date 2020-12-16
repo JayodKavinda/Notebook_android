@@ -1,2 +1,2 @@
 # NotebookApp
-Complete Android Studio project of simple note taking app
+Complete Android Studio project of simple note taking app using Java
